@@ -12,5 +12,10 @@
     <Folder Include="Repository\" />
     <Folder Include="Mappers\" />
     <Folder Include="Providers\" />
+    <Folder Include="Docs\" />
+    <Folder Include="Docs\Postman\" />
+    <Folder Include="Models\Filters\" />
+    <Folder Include="Models\Mocks\" />
+    <Folder Include="Models\Interfaces\" />
   </ItemGroup>
 </Project>
