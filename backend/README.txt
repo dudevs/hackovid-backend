@@ -1,0 +1,2 @@
+﻿Command to generate DB context for postgresql dudevs database
+dotnet ef dbcontext Scaffold "host=localhost;Database=dudevs;user id=dudevs;Password=dudevs" Npgsql.EntityFrameworkCore.PostgreSQL --output-dir test --context "PostgreContext"

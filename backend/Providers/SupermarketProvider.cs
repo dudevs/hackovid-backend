@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using backend.Models;
 using backend.Models.Filters;
-using backend.Models.Mocks;
+using backend.Repository;
 
 namespace backend.Providers
 {
     public static class SupermarketProvider
     {
+        
         public static List<Supermarket> FetchSupermarkets(SupermarketFilter supermarketFilter)
         {
             List<Supermarket> supermarketList = new List<Supermarket>();
-            int items = new Random().Next(1, 10);
-            for (int i = 0; i < items; i++)
+            using (PostgreSQLDBContext context = new PostgreSQLDBContext())
             {
-                supermarketList.Add(new SupermarketMock());
-                i++;
+                List<Shop> shops = context.Shop.ToList();
+                int a = 2;
             }
-
+    
             supermarketList = supermarketList.OrderBy(x => x.distance).ToList();
             return supermarketList;
         }
