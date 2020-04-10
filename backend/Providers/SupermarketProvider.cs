@@ -1,25 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using backend.Models;
-using backend.Models.Filters;
-using backend.Repository;
+using backend.Providers.Interfaces;
 
 namespace backend.Providers
 {
-    public static class SupermarketProvider
+    public class SupermarketProvider : ISupermarketProvider
     {
-        
-        public static List<Supermarket> FetchSupermarkets(SupermarketFilter supermarketFilter)
+        IApiProvider _apiProvider;
+        public SupermarketProvider(IApiProvider apiProvider)
         {
-            List<Supermarket> supermarketList = new List<Supermarket>();
-            using (PostgreSQLDBContext context = new PostgreSQLDBContext())
+            _apiProvider = apiProvider;
+        }
+
+
+        public async Task<IEnumerable<Supermarket>> FetchSupermarketsByAddress(string address)
+        {
+            IEnumerable<Supermarket> supermarketList = new List<Supermarket>();
+
+            try
             {
-                List<Shop> shops = context.Shop.ToList();
-                int a = 2;
+                GeoCoordinate location = await _apiProvider.GetGeocoordinateFromAddress(address);
+                supermarketList = await _apiProvider.GetSupermarketsFromLocation(location);
             }
-    
-            supermarketList = supermarketList.OrderBy(x => x.distance).ToList();
+            catch (Exception ex)
+            {
+                //no results found
+                //TODO: log error
+            }
+
+            return supermarketList;
+        }
+
+        public async Task<IEnumerable<Supermarket>> FetchSupermarketsByLocation(GeoCoordinate location)
+        {
+            IEnumerable<Supermarket> supermarketList = new List<Supermarket>();
+
+            try
+            {
+                supermarketList = await _apiProvider.GetSupermarketsFromLocation(location);
+            }
+            catch (Exception ex)
+            {
+                //no results found
+                //TODO: log error
+            }
+
             return supermarketList;
         }
     }
