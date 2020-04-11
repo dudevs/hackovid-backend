@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4000:80"
+    expose:
+      - 4000
     container_name: backend
 
 networks:
