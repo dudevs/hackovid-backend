@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using backend.Models;
-using backend.Providers;
 using backend.Providers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,14 +16,6 @@ namespace backend.Controllers
         {
             _supermarketProvider = supermarketProvider;
         }
-        /*[HttpGet]
-        public ActionResult<List<Supermarket>> Get()
-        {
-            //SupermarketFilter filter = new SupermarketFilter();
-            List<Supermarket> supermarketList = SupermarketProvider.FetchSupermarkets(filter);
-
-            return Ok(supermarketList);
-        }*/
 
         [Route("byaddress/")]
         [HttpGet]
@@ -50,6 +40,27 @@ namespace backend.Controllers
             IEnumerable<Supermarket> supermarketList = await _supermarketProvider.FetchSupermarketsByLocation(geoCoodinate);
 
             return Ok(supermarketList);
+        }
+
+        [Route("{id}")]
+        [HttpGet]
+        public ActionResult<IEnumerable<SupermarketData>> GetSupermarketData(string id)
+        {
+            IEnumerable<SupermarketData> spermarketDataList = _supermarketProvider.GetSupermarketDataById(id);
+
+            return Ok(spermarketDataList);
+        }
+
+        [Route("{id}/basicgood/{basicgood}")]
+        [HttpPost]
+        public ActionResult<SupermarketData> VoteBasicGood(string id, string basicgood, bool status)
+        {
+            bool voteRegistered = _supermarketProvider.VoteBasicGood(id, basicgood, status);
+
+            if (voteRegistered)
+                return Ok();
+            else
+                return StatusCode(500);
         }
     }
 }

@@ -10,5 +10,9 @@ namespace backend.Providers.Interfaces
         Task<IEnumerable<Supermarket>> FetchSupermarketsByAddress(string address);
 
         Task<IEnumerable<Supermarket>> FetchSupermarketsByLocation(GeoCoordinate location);
+
+        IEnumerable<SupermarketData> GetSupermarketDataById(string id);
+
+        bool VoteBasicGood(string id, string basicGood, bool status);
     }
 }

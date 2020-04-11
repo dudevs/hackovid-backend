@@ -1,22 +1,21 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repository
 {
-    public partial class PostgreSQLDBContext : DbContext
+    public partial class PostgreContext : DbContext
     {
-        public PostgreSQLDBContext()
+        public PostgreContext()
         {
         }
 
-        public PostgreSQLDBContext(DbContextOptions<PostgreSQLDBContext> options)
+        public PostgreContext(DbContextOptions<PostgreContext> options)
             : base(options)
         {
         }
 
         public virtual DbSet<GroupTypes> GroupTypes { get; set; }
         public virtual DbSet<Infoshop> Infoshop { get; set; }
+        public virtual DbSet<LastFourHours> LastFourHours { get; set; }
         public virtual DbSet<Shop> Shop { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,6 +29,11 @@ namespace backend.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasPostgresExtension("fuzzystrmatch")
+                .HasPostgresExtension("postgis")
+                .HasPostgresExtension("postgis_tiger_geocoder")
+                .HasPostgresExtension("postgis_topology");
+
             modelBuilder.Entity<GroupTypes>(entity =>
             {
                 entity.HasKey(e => e.Name)
@@ -88,6 +92,33 @@ namespace backend.Repository
                     .HasConstraintName("idshop_shop");
             });
 
+            modelBuilder.Entity<LastFourHours>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("last_four_hours", "supermarket");
+
+                entity.Property(e => e.Groupname)
+                    .HasColumnName("groupname")
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.Idshop)
+                    .HasColumnName("idshop")
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.Negatives)
+                    .HasColumnName("negatives")
+                    .HasColumnType("numeric(4,0)");
+
+                entity.Property(e => e.Positives)
+                    .HasColumnName("positives")
+                    .HasColumnType("numeric(4,0)");
+
+                entity.Property(e => e.Unixtime)
+                    .HasColumnName("unixtime")
+                    .HasColumnType("numeric(10,0)");
+            });
+
             modelBuilder.Entity<Shop>(entity =>
             {
                 entity.ToTable("shop", "supermarket");
@@ -104,18 +135,18 @@ namespace backend.Repository
                     .HasColumnName("city")
                     .HasMaxLength(250);
 
-                entity.Property(e => e.Latitude)
-                    .HasColumnName("latitude")
-                    .HasColumnType("numeric(8,6)");
+                entity.Property(e => e.Latitude).HasColumnName("latitude");
 
-                entity.Property(e => e.Longitude)
-                    .HasColumnName("longitude")
-                    .HasColumnType("numeric(9,6)");
+                entity.Property(e => e.Longitude).HasColumnName("longitude");
 
                 entity.Property(e => e.Nom)
                     .HasColumnName("nom")
                     .HasMaxLength(250);
             });
+
+            modelBuilder.HasSequence("api_calls", "supermarket")
+                .HasMin(0)
+                .HasMax(4000);
 
             OnModelCreatingPartial(modelBuilder);
         }
