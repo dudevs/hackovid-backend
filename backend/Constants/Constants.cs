@@ -12,7 +12,7 @@
         public const double MIN_LONGITUDE = 180;
         public const double MAX_LONGITUDE = -180;
 
-        public const int MAX_DISTANCE_METERS = 4000;
+        public const int MAX_DISTANCE_METERS = 1400;
 
         //TODO: moure a variables d'entorn
         public const string LOCATION_IQ_API_KEY = "09c9f9f19650d2";
