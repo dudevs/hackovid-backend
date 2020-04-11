@@ -72,12 +72,18 @@ namespace backend.Controllers
         [HttpPost]
         public ActionResult<SupermarketData> VoteBasicGood(string id, string basicgood, bool status)
         {
-            bool voteRegistered = _supermarketProvider.VoteBasicGood(id, basicgood, status);
+            bool isVoteRegistered = _supermarketProvider.VoteBasicGood(id, basicgood, status);
 
-            if (voteRegistered)
-                return Ok();
-            else
-                return StatusCode(500);
+            VoteRegistered voteRegistered = new VoteRegistered()
+            {
+                id = id,
+                basicGood = basicgood,
+                status = status,
+                voteRegistered = isVoteRegistered
+            };
+
+
+            return Ok(voteRegistered);
         }
     }
 }
