@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace backend.Models.ApiServices
 {
+    /**
+     * Model for google maps places api
+     */
     public class Location
     {
         public double lat { get; set; }

@@ -1,8 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace backend.Models
 {
+    /*
+     * SupermarketData model
+     * Contains the needed info to display a the timeline of basic goods for a given supermarket
+     */
     public class SupermarketData
     {
         public string item { get; set; }

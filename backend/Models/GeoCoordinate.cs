@@ -1,9 +1,19 @@
 ﻿namespace backend.Models
 {
+    /**
+     * Geocoordinate model
+     * Contains the latitude and longitude and allows to check if it is a valid location
+     */
     public class GeoCoordinate
     {
         public double Lat { get; set; }
         public double Lng { get; set; }
+
+        public GeoCoordinate()
+        {
+            Lat = 0;
+            Lng = 0;
+        }
 
         public GeoCoordinate(double lat, double lng)
         {
@@ -20,6 +30,12 @@
                 return isValid;
 
             return !isValid;
+        }
+
+        override
+        public string ToString()
+        {
+            return "Location: lat" + Lat + ", lng:" + Lng;
         }
     }
 }

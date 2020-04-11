@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
+    /**
+     * Info controller
+     * Checks the backend is up and running
+     */
     [Route("api/[controller]")]
     [ApiController]
     public class InfoController : ControllerBase
@@ -17,12 +21,15 @@ namespace backend.Controllers
         }
 
 
+        /**
+         * returns the be service version and if there is connectivity with the database at the request time
+         */
         [HttpGet]
         public ActionResult<Info> Get()
         {
             Info info = new Info
             {
-                version = "v1",
+                version = Constants.Constants.VERSION,
                 databaseConnectionEstablished = _supermarketProvider.CheckDatabaseConnection(),
                 time = DateTime.Now
             };

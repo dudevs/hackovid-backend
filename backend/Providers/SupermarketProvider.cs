@@ -9,6 +9,10 @@ using Npgsql;
 
 namespace backend.Providers
 {
+    /**
+     * Supermarket provider
+     * Manages all communication between the controllers, the api's and database transactions 
+     */
     public class SupermarketProvider : ISupermarketProvider
     {
         IApiProvider _apiProvider;
@@ -17,7 +21,9 @@ namespace backend.Providers
             _apiProvider = apiProvider;
         }
 
-
+        /*
+         * Returns a list of supermarkets given an addres. Also stores some data of the supermarkets received from google maps in database
+         */
         public async Task<IEnumerable<Supermarket>> FetchSupermarketsByAddress(string address)
         {
             IEnumerable<Supermarket> supermarketList = new List<Supermarket>();
@@ -25,19 +31,24 @@ namespace backend.Providers
             try
             {
                 GeoCoordinate location = await _apiProvider.GetGeocoordinateFromAddress(address);
-                supermarketList = await _apiProvider.GetSupermarketsFromLocation(location);
-                int savedRows = SaveSupermarkets(supermarketList.ToList());
-                
+                if (location != null)
+                {
+                    supermarketList = await _apiProvider.GetSupermarketsFromLocation(location);
+                    int savedRows = SaveSupermarkets(supermarketList.ToList());
+                }
             }
             catch (Exception ex)
             {
-                //no results found
-                //TODO: log error
+                Console.WriteLine("Error at FetchSupermarketsByAddress(string address): " + ex.Message);
+                Console.WriteLine("Param address: " + address);
             }
 
             return supermarketList;
         }
 
+        /*
+         * Returns a list of supermarkets given a location. Also stores some data of the supermarkets received from google maps in database
+         */
         public async Task<IEnumerable<Supermarket>> FetchSupermarketsByLocation(GeoCoordinate location)
         {
             IEnumerable<Supermarket> supermarketList = new List<Supermarket>();
@@ -49,13 +60,16 @@ namespace backend.Providers
             }
             catch (Exception ex)
             {
-                //no results found
-                //TODO: log error
+                Console.WriteLine("Error at FetchSupermarketsByAddress(string address): " + ex.Message);
+                Console.WriteLine("Param location: " + location.ToString());
             }
 
             return supermarketList;
         }
 
+        /*
+         * Checks database connectivity
+         */
         public bool CheckDatabaseConnection()
         {
             bool isThereConnection = false;
@@ -66,6 +80,9 @@ namespace backend.Providers
             return isThereConnection;
         }
 
+        /*
+         * Returns the basic goods data for a given supermarket
+         */
         public IEnumerable<SupermarketData> GetSupermarketDataById(string id)
         {
             List<SupermarketData> supermarketDataList = new List<SupermarketData>();
@@ -103,6 +120,9 @@ namespace backend.Providers
             return supermarketDataList;
         }
 
+        /*
+         * Allows to indicate if there is stock of a basic good for a given supermarket
+         */
         public bool VoteBasicGood(string id, string basicGood, bool status)
         {
             bool voteRegistered = false;
@@ -123,14 +143,17 @@ namespace backend.Providers
                     }
                     catch (Exception ex)
                     {
-                        //TODO register error
-                        int a = 2;
+                        Console.WriteLine("Error at VoteBasicGood(string id, string basicGood, bool status): " + ex.Message);
+                        Console.WriteLine("Param id: " + id + ", basicGood: " + basicGood + ", status: " + status);
                     }
                 }
             }
             return voteRegistered;
         }
 
+        /*
+         * Stores some supermarkets data return by google maps places api
+         */
         private int SaveSupermarkets(List<Supermarket> supermarkets)
         {
             int rowsAffected = 0;

@@ -1,6 +1,8 @@
-﻿using System;
-namespace backend.Models.ApiServices
+﻿namespace backend.Models.ApiServices
 {
+    /**
+     * Model for location iq api
+     */
     public class LocationIQ
     {
         public string place_id { get; set; }

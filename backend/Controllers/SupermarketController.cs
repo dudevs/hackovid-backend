@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
+    /**
+     * Supermarket controller
+     * Performs all the requests made by the frontend
+     */
     [Route("api/[controller]")]
     [ApiController]
     public class SupermarketController : ControllerBase
@@ -17,6 +21,10 @@ namespace backend.Controllers
             _supermarketProvider = supermarketProvider;
         }
 
+
+        /**
+         * Returns all the supermarkets given an address
+         */
         [Route("byaddress/")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Supermarket>>> GetSupermarketsByAddress(string address)
@@ -29,6 +37,9 @@ namespace backend.Controllers
             return Ok(supermarketList);
         }
 
+        /**
+         * Returns all the supermarkets given a geolocation
+         */
         [Route("bylocation/")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Supermarket>>> GetSupermarketsLocation(double lat, double lon)
@@ -42,6 +53,9 @@ namespace backend.Controllers
             return Ok(supermarketList);
         }
 
+        /**
+         * Returns the supermarket basic goods info with their timeline
+         */
         [Route("{id}")]
         [HttpGet]
         public ActionResult<IEnumerable<SupermarketData>> GetSupermarketData(string id)
@@ -51,6 +65,9 @@ namespace backend.Controllers
             return Ok(spermarketDataList);
         }
 
+        /**
+         * Allows to vote given a supermarket id if there is stock or not for a basic good
+         */
         [Route("{id}/basicgood/{basicgood}")]
         [HttpPost]
         public ActionResult<SupermarketData> VoteBasicGood(string id, string basicgood, bool status)

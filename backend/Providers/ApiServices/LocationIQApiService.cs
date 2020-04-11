@@ -7,6 +7,10 @@ using backend.Models.ApiServices;
 
 namespace backend.Providers.ApiServices
 {
+    /**
+     * Location IQ service class
+     * Manages all the requests to Location IQ api's
+     */
     public class LocationIQApiService
     {
         public HttpClient Client { get; }
@@ -18,6 +22,9 @@ namespace backend.Providers.ApiServices
             Client = client;
         }
 
+        /**
+         * Gets the latitude and longitude given an address
+         */
         public async Task<IEnumerable<LocationIQ>> GetLocationIQ(string address)
         {
             string addressConverted = address;
@@ -26,8 +33,16 @@ namespace backend.Providers.ApiServices
 
             response.EnsureSuccessStatusCode();
 
-            using var responseStream = await response.Content.ReadAsStreamAsync();
-            return await JsonSerializer.DeserializeAsync<IEnumerable<LocationIQ>>(responseStream);
+            try
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                return await JsonSerializer.DeserializeAsync<IEnumerable<LocationIQ>>(responseStream);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error at GetLocationIQ(string address): " + ex.Message);
+                return null;
+            }
         }
     }
 }

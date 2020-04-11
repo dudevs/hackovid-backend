@@ -7,6 +7,10 @@ using backend.Models.ApiServices;
 
 namespace backend.Providers.ApiServices
 {
+    /**
+     * Google maps api service class
+     * Manages all the requests to google api's
+     */
     public class GoogleMapsApiService
     {
         public HttpClient Client { get; }
@@ -18,6 +22,9 @@ namespace backend.Providers.ApiServices
             Client = client;
         }
 
+        /**
+         * Gets all the groceries and supermarkets for a given location and a predefined distance
+         */
         public async Task<GooglePlacesObject> GetSupermarkets(GeoCoordinate location)
         {
             var response = await Client.GetAsync(
@@ -36,8 +43,7 @@ namespace backend.Providers.ApiServices
             }
             catch (Exception ex)
             {
-                //TODO: log error
-                int a = 1;
+                Console.WriteLine("Error at GetSupermarkets(Geocoordinate location): " + ex.Message);
                 return null;
             }
         }

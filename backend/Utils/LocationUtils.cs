@@ -4,9 +4,16 @@ using Geolocation;
 
 namespace backend.Utils
 {
-    public static class DistanceCalculator
+    /*
+     * Location's utils class
+     */
+    public static class LocationUtils
     {
-        public static int calcualteDistance(GeoCoordinate from, GeoCoordinate to)
+
+        /*
+         * Calculates the distance in meters between two geolocations
+         */
+        public static int CalculateDistance(GeoCoordinate from, GeoCoordinate to)
         {
 
             var origin = new Coordinate { Latitude = from.Lat, Longitude = from.Lng };

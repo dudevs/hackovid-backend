@@ -4,6 +4,9 @@ using backend.Models;
 
 namespace backend.Providers.Interfaces
 {
+    /*
+     * Interface for supermarkets provider
+     */
     public interface ISupermarketProvider
     {
         bool CheckDatabaseConnection();
