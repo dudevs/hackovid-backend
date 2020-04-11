@@ -14,10 +14,9 @@
 
         public const int MAX_DISTANCE_METERS = 4000;
 
+        //TODO: moure a variables d'entorn
         public const string LOCATION_IQ_API_KEY = "09c9f9f19650d2";
         public const string GOOGLE_MAPS_API_KEY = "AIzaSyDOSNzdaR7KH38DS7SW105Lsmmbfr3WQm4";
-
-        //TODO: this is a guarrada
         public const string PostgreConnectionString = "host=postgres_container;Database=dudevs;user id=dudevs;Password=dudevs";
     }
 }
