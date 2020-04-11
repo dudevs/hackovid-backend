@@ -38,6 +38,11 @@ namespace backend
 
             app.UseHttpsRedirection();
 
+            app.UseCors(
+                builder =>
+                    builder.AllowAnyOrigin()
+            );
+
             app.UseRouting();
 
             app.UseAuthorization();
