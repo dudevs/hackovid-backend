@@ -1,5 +1,6 @@
 ﻿using System;
 using backend.Models;
+using backend.Providers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -8,13 +9,21 @@ namespace backend.Controllers
     [ApiController]
     public class InfoController : ControllerBase
     {
+        private ISupermarketProvider _supermarketProvider;
+
+        public InfoController(ISupermarketProvider supermarketProvider)
+        {
+            _supermarketProvider = supermarketProvider;
+        }
+
+
         [HttpGet]
         public ActionResult<Info> Get()
         {
             Info info = new Info
             {
                 version = "v1",
-                databaseConnectionEstablished = false,
+                databaseConnectionEstablished = _supermarketProvider.CheckDatabaseConnection(),
                 time = DateTime.Now
             };
 

@@ -1,5 +1,4 @@
-﻿using System;
-namespace backend.Constants
+﻿namespace backend.Constants
 {
     public class Constants
     {

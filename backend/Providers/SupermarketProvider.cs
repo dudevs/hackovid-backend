@@ -56,6 +56,16 @@ namespace backend.Providers
             return supermarketList;
         }
 
+        public bool CheckDatabaseConnection()
+        {
+            bool isThereConnection = false;
+            using (PostgreContext context = new PostgreContext())
+            {
+                isThereConnection = 0 < context.GroupTypes.Count();
+            }
+            return isThereConnection;
+        }
+
         public IEnumerable<SupermarketData> GetSupermarketDataById(string id)
         {
             List<SupermarketData> supermarketDataList = new List<SupermarketData>();
@@ -100,12 +110,8 @@ namespace backend.Providers
             using (var conn = new NpgsqlConnection(Constants.Constants.PostgreConnectionString))
             {
                 conn.Open();
-                //using (var tran = conn.BeginTransaction())
                 using (var cmd = new NpgsqlCommand("supermarket.vote", conn))
-                //using (var cmd = new NpgsqlCommand("SELECT supermarket.vote('" + id + "', '" + basicGood + "', " + status + ");", conn))
                 {
-                    //var ret = (int)cmd.ExecuteScalar();
-                    //voteRegistered = ret != 0;
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id", NpgsqlTypes.NpgsqlDbType.Text, id);
                     cmd.Parameters.AddWithValue("@basicgood", NpgsqlTypes.NpgsqlDbType.Text, basicGood);

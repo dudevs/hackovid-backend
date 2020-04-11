@@ -1,11 +1,7 @@
-﻿using System;
-using backend.Constants;
-
-namespace backend.Models
+﻿namespace backend.Models
 {
     public class GeoCoordinate
     {
-        //private static readonly ILog Log = LogManager.GetLogger(typeof(GeoCoordinate));
         public double Lat { get; set; }
         public double Lng { get; set; }
 
