@@ -1,37 +1,34 @@
-## Welcome to GitHub Pages
+# hackovid-platform
 
-You can use the [editor on GitHub](https://github.com/dudevs/hackovid-backend/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+* `LOCATION_IQ_API_KEY`: Clau per fer servir la api de Location IQ per fer reverse geocoding. Per més informació consulteu https://locationiq.com/. 
+* `GOOGLE_MAPS_API_KEY`: Clau per fer servir la api Placer de Google maps api per obtenir els supermercats propers a la ubicació subministrada. Per a més informaciço consulteu https://developers.google.com/maps/documentation/javascript/get-api-key?hl=es-419  
+* `PostgreConnectionString`: Cadena per connectar-se a la base de dades de PostgreSQL segons la configuració que feu servir. Normalment té el format host=nom_del_host;Database=nom_de_la_base_de_dades;user id=usuari_amb_permisosvs;Password=contrassenya_de_lusuari_amb_permisos
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Docker (opcional)
 
-### Markdown
+Descarregar la versió més recent de Docker des de https://www.docker.com/products/docker-desktop
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Obrir una consola i anar dins la carpeta Docker del projecte.
 
-```markdown
-Syntax highlighted code block
+Executeu les següents comandes:
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+### Crear una xarxa on es connectarà el contenidor de docker (en cas de no haver-ho fet prèviament amb el modul hackovid-platform)
+``` shell
+docker network create hackovid-network
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Construir la imatge
+``` shell
+docker-compose build
+```
 
-### Jekyll Themes
+### Posar en marxa el contenidor
+``` shell
+docker-compose up
+```
+Podeu afegir el parametre -d per tal que una vegada aixecat el contenidor pogueu continuar fent servir el terminal
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/dudevs/hackovid-backend/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### Aturar el contenidor
+``` shell
+docker-compose down
+```
