@@ -1,0 +1,18 @@
+version: '3.2'
+
+services:
+  backendmodule:
+    image: backend
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4000:80"
+    expose:
+      - 4000
+    container_name: backend
+
+networks:
+  default:
+    external:
+      name: hackovid-network

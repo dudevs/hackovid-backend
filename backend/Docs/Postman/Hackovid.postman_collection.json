@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "f9528845-c52a-4f25-bd65-2e10708bf1a7",
+		"name": "Hackovid",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get supermarkets by location",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/supermarket/bylocation?lat=41.5527687&lon=2.0206894",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"supermarket",
+						"bylocation"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "41.5527687"
+						},
+						{
+							"key": "lon",
+							"value": "2.0206894"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get supermarkets by address",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/supermarket/byaddress?address=carrer%20del%20bergueda%2068%2C%20terrassa",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"supermarket",
+						"byaddress"
+					],
+					"query": [
+						{
+							"key": "address",
+							"value": "carrer%20del%20bergueda%2068%2C%20terrassa"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get supermarket data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/supermarket/49bc9aec456291a67247070a7f01cbb33ebd7cde/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"supermarket",
+						"49bc9aec456291a67247070a7f01cbb33ebd7cde",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "vote basic good",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/supermarket/49bc9aec456291a67247070a7f01cbb33ebd7cde/basicgood/rice?status=true",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"supermarket",
+						"49bc9aec456291a67247070a7f01cbb33ebd7cde",
+						"basicgood",
+						"rice"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
